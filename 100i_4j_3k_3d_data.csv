@@ -1,0 +1,101 @@
+,ID,gender,age,region,nation,media
+0,1,male,older,rural,England,1
+1,2,male,younger,urban,England,1
+2,3,female,younger,rural,Scotland,1
+3,4,female,older,urban,Wales,1
+4,5,male,younger,urban,Northern Ireland,1
+5,6,male,older,rural,England,0
+6,7,male,older,rural,England,0
+7,8,female,older,rural,Scotland,1
+8,9,male,younger,urban,Wales,1
+9,10,female,younger,urban,Northern Ireland,1
+10,11,male,older,rural,England,1
+11,12,female,older,rural,England,1
+12,13,male,older,urban,Scotland,0
+13,14,female,younger,urban,Wales,0
+14,15,female,older,urban,Northern Ireland,1
+15,16,female,younger,urban,England,1
+16,17,male,younger,urban,England,1
+17,18,female,older,urban,Scotland,1
+18,19,female,older,urban,Wales,1
+19,20,male,older,urban,Northern Ireland,0
+20,21,male,younger,urban,England,0
+21,22,male,younger,urban,England,1
+22,23,female,older,urban,Scotland,1
+23,24,male,older,urban,Wales,1
+24,25,female,younger,rural,Northern Ireland,1
+25,26,male,younger,rural,England,1
+26,27,female,older,urban,England,0
+27,28,male,older,urban,Scotland,0
+28,29,female,younger,urban,Wales,1
+29,30,male,younger,urban,Northern Ireland,1
+30,31,male,younger,urban,England,1
+31,32,female,older,urban,England,1
+32,33,male,older,urban,Scotland,1
+33,34,male,older,urban,Wales,0
+34,35,male,older,urban,Northern Ireland,0
+35,36,female,older,urban,Scotland,1
+36,37,female,younger,urban,Northern Ireland,1
+37,38,male,younger,urban,England,1
+38,39,female,younger,urban,Scotland,1
+39,40,male,younger,urban,Northern Ireland,1
+40,41,male,older,urban,Northern Ireland,0
+41,42,male,older,rural,England,0
+42,43,female,older,rural,England,1
+43,44,male,older,rural,Northern Ireland,1
+44,45,male,younger,urban,England,1
+45,46,female,younger,urban,Wales,1
+46,47,female,older,urban,Northern Ireland,1
+47,48,male,older,urban,Northern Ireland,0
+48,49,female,younger,rural,England,0
+49,50,male,younger,urban,Northern Ireland,1
+50,51,male,older,rural,England,1
+51,52,female,older,urban,Wales,1
+52,53,female,older,urban,Scotland,1
+53,54,male,younger,urban,England,1
+54,55,male,older,urban,Wales,0
+55,56,male,older,rural,England,0
+56,57,female,older,rural,Wales,1
+57,58,male,older,urban,Scotland,1
+58,59,male,older,rural,Scotland,1
+59,60,male,younger,rural,England,1
+60,61,female,younger,rural,Northern Ireland,1
+61,62,male,younger,urban,Wales,0
+62,63,male,younger,urban,Wales,0
+63,64,male,older,rural,Northern Ireland,1
+64,65,male,older,rural,Northern Ireland,1
+65,66,male,younger,rural,Wales,1
+66,67,female,younger,rural,England,1
+67,68,male,older,urban,England,1
+68,69,male,older,urban,England,0
+69,70,female,older,urban,Scotland,0
+70,71,female,younger,urban,Northern Ireland,1
+71,72,female,older,urban,England,1
+72,73,female,older,urban,England,1
+73,74,male,older,urban,England,1
+74,75,male,older,urban,Wales,1
+75,76,female,older,rural,Wales,0
+76,77,male,older,rural,Wales,0
+77,78,male,younger,rural,Wales,1
+78,79,male,younger,urban,England,1
+79,80,male,older,urban,Northern Ireland,1
+80,81,female,older,urban,Scotland,1
+81,82,male,younger,rural,Northern Ireland,1
+82,83,female,older,urban,England,0
+83,84,female,younger,urban,England,0
+84,85,female,younger,urban,Northern Ireland,1
+85,86,male,older,urban,England,1
+86,87,female,older,urban,Northern Ireland,1
+87,88,male,older,urban,Wales,1
+88,89,female,younger,rural,England,1
+89,90,male,older,urban,Wales,0
+90,91,female,younger,rural,Scotland,0
+91,92,male,younger,urban,Northern Ireland,1
+92,93,male,older,rural,Northern Ireland,1
+93,94,female,younger,rural,Scotland,1
+94,95,male,younger,urban,England,1
+95,96,female,younger,urban,England,1
+96,97,male,older,urban,England,0
+97,98,female,older,urban,England,0
+98,99,male,older,urban,Wales,1
+99,100,female,younger,urban,England,1

@@ -15,7 +15,7 @@ class TAAppDataManager:
 
         app_data.fields = {}
 
-        app_data.settings = {'tables': 6, 'cluster_tables':2, 'val_cluster':'cluster','seats': 8, 'nallocations': 3, 'nattempts': 100, 'seed': 1.0, 'pareto_prob': 0.5, 'swap_rounds':1,'cluster_tables_required':0}
+        app_data.settings = {'tables': 6, 'seats': 8, 'nallocations': 3, 'nattempts': 100, 'seed': 1.0}
 
         app_data.order_cluster = []
         app_data.order_diverse = []

@@ -1,0 +1,23 @@
+HOW TO RUN GROUPSELECT
+
+1) ensure Python Scripts directory is added to PATH
+ a) C:\Users\Jake\AppData\Local\Programs\Python\Python36-32\Scripts
+ (also add without Scripts)
+ b) Right-click "This PC" -> Properties -> Advanced System Settings -> Environmental Variables
+ c) select "path" and edit; paste in Scripts path as new
+2) win+R -> cmd to open command window; pip install pipenv (might need to run twice??); verify installation with "pipenv --version"; restart cmd
+3) Navigate to the directory (cd C:\Users\Jake\OneDrive - University of Edinburgh\Documents\GitHub\groupselect-app) 
+	Might need to point pipenv to the right Python 3.7 install: pipenv --python "C:\Users\Jake\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Python 3.7\Python 3.7 (32-bit).lnk"
+4) install pipenv dependencies ("pipenv install") - if this isn't working, update pipfile to matching Python version
+(might need to run pipenv --rm if there are issues with Python versioning)
+(remove lock file?)
+
+(works absolutely no issue on the IOD laptop)
+
+Worked 17/04/24:
+cd directory
+pipenv --rm
+delete pip files (only if haven't loaded pips from git source)
+pipenv install
+pipenv shell
+pip install fbs (only if haven't loaded pips from git source)

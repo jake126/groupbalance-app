@@ -52,10 +52,9 @@ class TAFieldsTab(QWidget):
         return label
 
     def create_table_term_widget(self):
-        self.terms_table = QTableWidget(0, 2)
-        self.terms_table.setHorizontalHeaderLabels(['Terms Found', 'Terms Usage'])
-        self.terms_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
-        self.terms_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.terms_table = QTableWidget(0, 3)
+        self.terms_table.setHorizontalHeaderLabels(['Terms Found', 'Terms Usage', 'Cluster Value?'])
+        self.terms_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.terms_table.cellChanged.connect(self.userchanged_table)
 
         return self.terms_table
@@ -105,6 +104,10 @@ class TAFieldsTab(QWidget):
             item_col0.setFlags(Qt.ItemIsSelectable)
             self.terms_table.setItem(k, 0, item_col0)
             self.terms_table.setItem(k, 1, QTableWidgetItem(term_usage[1]))
+            checkbox_item = QTableWidgetItem()
+            checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
+            checkbox_item.setCheckState(Qt.Unchecked)
+            self.terms_table.setItem(k, 2, checkbox_item)
         self._table_being_updated = False
 
     def status_mode_box(self, status):
@@ -133,6 +136,10 @@ class TAFieldsTab(QWidget):
         self.ctx.app_data.fields[j]['mode'] = mode
 
         mode = self.ctx.app_data.fields[j]['mode']
+        if mode == 'diversify':
+            self.terms_table.setColumnHidden(2, True)  # Hide the third column
+        else:
+            self.terms_table.setColumnHidden(2, False)  # Show the third column
         self.status_terms_group(True if mode in ['cluster', 'diversify'] else False)
 
         self.ctx.window.tabs.fields_update()
@@ -140,4 +147,19 @@ class TAFieldsTab(QWidget):
     def userchanged_table(self, k, l):
         if self._table_being_updated: return
         j = self.get_current_field_index()
-        self.ctx.app_data.fields[j]['terms'][k][1] = self.terms_table.item(k, l).text()
+        if l == 1:
+            self.ctx.app_data.fields[j]['terms'][k][1] = self.terms_table.item(k, 1).text()
+        if l == 2: 
+            # ensure only one box can be checked
+            for row in range(self.terms_table.rowCount()):
+                if row != k:
+                    item = self.terms_table.item(row, 2)
+                    item.setCheckState(Qt.Unchecked)
+            # Toggle checkbox state
+            checkbox_item = self.terms_table.item(k, l)
+            checked = checkbox_item.checkState() == Qt.Checked
+            if checked:
+                self.ctx.app_data.settings['val_cluster'] = self.terms_table.item(k, 1).text()
+            if not checked:
+                # reset to default
+                self.ctx.app_data.settings['val_cluster'] = "cluster"

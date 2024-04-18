@@ -25,14 +25,14 @@ class TAGenerateTab(QWidget):
         self.order_cluster.trigger.connect(self.userchanged_order_lists)
         order_cluster_layout = QVBoxLayout()
         order_cluster_layout.addWidget(self.order_cluster)
-        order_cluster_group = QGroupBox("Cluster Order")
+        order_cluster_group = QGroupBox("Cluster Fields")
         order_cluster_group.setLayout(order_cluster_layout)
 
         self.order_diverse = TAListMove()
         self.order_diverse.trigger.connect(self.userchanged_order_lists)
         order_diverse_layout = QVBoxLayout()
         order_diverse_layout.addWidget(self.order_diverse)
-        order_diverse_group = QGroupBox("Diversify Order")
+        order_diverse_group = QGroupBox("Diversify Fields")
         order_diverse_group.setLayout(order_diverse_layout)
 
         self.order_manual = QListWidget()
@@ -62,16 +62,16 @@ class TAGenerateTab(QWidget):
 
         run_settings1_layout = QFormLayout()
 
-        self.seats_field = QLineEdit()
-        self.seats_field.setValidator( QIntValidator(1, 16, self) );
-        self.seats_field.textChanged.connect(self.userchanged_settings_fields)
+        self.cluster_table_field = QLineEdit()
+        self.cluster_table_field.setValidator( QIntValidator(1, 100, self) );
+        self.cluster_table_field.textChanged.connect(self.userchanged_settings_fields)
 
         self.tables_field = QLineEdit()
         self.tables_field.setValidator( QIntValidator(1, 100, self) );
         self.tables_field.textChanged.connect(self.userchanged_settings_fields)
 
         run_settings1_layout.addRow(QLabel("Num. of Groups"), self.tables_field)
-        run_settings1_layout.addRow(QLabel("Num. of People per Group"), self.seats_field)
+        run_settings1_layout.addRow(QLabel("Num. of Clustering Groups"), self.cluster_table_field)
 
         run_settings1_layout_widget = QWidget()
         run_settings1_layout_widget.setLayout(run_settings1_layout)
@@ -159,7 +159,7 @@ class TAGenerateTab(QWidget):
         self._settings_being_updated = True
 
         self.tables_field.setText(str(self.ctx.app_data.settings['tables']))
-        self.seats_field.setText(str(self.ctx.app_data.settings['seats']))
+        self.cluster_table_field.setText(str(self.ctx.app_data.settings['cluster_tables']))
 
         self.number_field.setText(str(self.ctx.app_data.settings['nallocations']))
 
@@ -197,7 +197,7 @@ class TAGenerateTab(QWidget):
         if self._settings_being_updated: return
         try:
             self.ctx.app_data.settings['tables'] = int(self.tables_field.text()) if self.tables_field.text() else 0
-            self.ctx.app_data.settings['seats'] = int(self.seats_field.text()) if self.seats_field.text() else 0
+            self.ctx.app_data.settings['cluster_tables'] = int(self.cluster_table_field.text()) if self.cluster_table_field.text() else 0
             self.ctx.app_data.settings['nallocations'] = int(self.number_field.text()) if self.number_field.text() else 0
         except Exception as e:
             QMessageBox.critical(self, "Error", "Error occurred while processing your entry: {}".format(str(e)))
@@ -205,19 +205,23 @@ class TAGenerateTab(QWidget):
 
     def buttonclicked_advanced_settings(self):
         try:
-            attempts_default = self.ctx.app_data.settings['nattempts']
+            swap_rounds_default = self.ctx.app_data.settings['swap_rounds']
+            pareto_default = self.ctx.app_data.settings['pareto_prob']
             seed_default = self.ctx.app_data.settings['seed']
-            status, attempts, seed = TAAdvancedSettingsDialog.get_input(self, attempts_default, seed_default)
+            status, swap_rounds, seed, pareto_prob = TAAdvancedSettingsDialog.get_input(self, swap_rounds_default, seed_default, pareto_default)
             if not status: return
-            self.ctx.app_data.settings['nattempts'] = attempts
+            self.ctx.app_data.settings['swap_rounds'] = swap_rounds
+            self.ctx.app_data.settings['pareto_prob'] = pareto_prob
             self.ctx.app_data.settings['seed'] = seed
         except Exception as e:
             QMessageBox.critical(self, "Error", "Error occurred while processing your entry: {}".format(str(e)))
         self.ctx.set_unsaved()
 
     def buttonclicked_run_allocation(self):
-        attempts = self.ctx.app_data.settings['nattempts']
-        progress_bar = QProgressDialog("Generating table allocations...", "", 0, attempts, self.ctx.window)
+        attempts = self.ctx.app_data.settings['nallocations']
+        n_swap_loops = self.ctx.app_data.settings['swap_rounds']
+        total_iterations = attempts + n_swap_loops
+        progress_bar = QProgressDialog("Generating table allocations...", "", 0, total_iterations, self.ctx.window)
         progress_bar.setWindowTitle("Generating...")
         progress_bar.setWindowModality(Qt.WindowModal)
         progress_bar.setAutoClose(False)
@@ -235,8 +239,11 @@ class TAGenerateTab(QWidget):
             return
 
         progress_bar.close()
-        QMessageBox.information(self, "Success!", "The allocations were successfully computed. Average number of links is {:.2f} ({:.2f} % of max).".format(self.ctx.ta_manager.links, 100*self.ctx.ta_manager.links_rel))
-
+        cluster_tables_required = self.ctx.app_data.settings["cluster_tables_required"]
+        if cluster_tables_required == 0:
+            QMessageBox.information(self, "Success!", "The allocations were successfully computed. Average number of links is {:.2f} ({:.2f} % of max).".format(self.ctx.ta_manager.links, 100*self.ctx.ta_manager.links_rel))
+        else:
+            QMessageBox.information(self, "Success!", "The allocations were successfully computed. Average number of links is {:.2f} ({:.2f} % of max). Please note that performance is likely to improve with at least {:.0f} clustering tables.".format(self.ctx.ta_manager.links, 100*self.ctx.ta_manager.links_rel, cluster_tables_required+1))
         self.ctx.set_unsaved()
         self.ctx.window.tabs.results_updated()
         self.ctx.window.results_menu.setEnabled(True)
