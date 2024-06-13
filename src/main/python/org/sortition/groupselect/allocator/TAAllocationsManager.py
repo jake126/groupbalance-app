@@ -49,8 +49,8 @@ class TAAllocationsManager:
         order_cluster_dict = self.ctx.app_data_manager.get_fields_cluster_dict()
         order_diverse_dict = self.ctx.app_data_manager.get_fields_diverse_dict()
 
-        if not order_diverse_dict:
-            raise Exception("Error: One diversification field required!", "You have to set at least one field that is used to diversify people across groups.")
+        #if not order_diverse_dict:
+        #    raise Exception("Error: One diversification field required!", "You have to set at least one field that is used to diversify people across groups.")
             
         if len(order_cluster_dict)>1:
             raise Exception("Error: Only one cluster field permitted. Please reduce the number of cluster fields.")
